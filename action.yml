@@ -1,0 +1,37 @@
+name: 'Woo plugin mirror automation'
+description: 'Automate Woo plugin mirroring on GitHub.'
+author: 'pronamic'
+
+branding:
+  icon: 'upload-cloud'
+  color: 'orange'
+
+inputs:
+  woo-access-token:
+    description: >
+      Woo access token.
+    required: true
+  woo-access-token-secret:
+    description: >
+      Woo access token secret.
+    required: true
+  woo-product-id:
+    description: >
+      Woo product ID.
+    required: true
+  plugin-basename:
+    description: >
+      Woo plugin basename.
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - id: mirror
+      run: php ${{ github.action_path }}/mirror.php
+      shell: bash
+      env:
+        INPUT_WOO-ACCESS-TOKEN: ${{ inputs.woo-access-token }}
+        INPUT_WOO-ACCESS-TOKEN-SECRET: ${{ inputs.woo-access-token-secret }}
+        INPUT_WOO-PRODUCT-ID: ${{ inputs.woo-product-id }}
+        INPUT_PLUGIN-BASENAME: ${{ inputs.plugin-basename }}
